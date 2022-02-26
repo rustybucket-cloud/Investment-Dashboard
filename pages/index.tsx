@@ -12,7 +12,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     user || Router.push("/login")
-  }, [user, loading])
+  }, [loading])
 
   const handleClick = async () => {
     await logOut()
