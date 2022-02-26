@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { Form, Card, Button, Alert } from "react-bootstrap";
 import { useEffect, useRef, useState } from 'react';
 import Router from 'next/router';
+import Link from 'next/link';
 import { auth, signUpUser } from '../../firebase/clientApp';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import About from '../../components/signup/About';
@@ -69,7 +70,7 @@ export default function Signup() {
                             </Form.Group>
                             <Button className="col-12 mt-2" onClick={handleSubmit}>Sign Up</Button>
                         </Form>
-                        <p className="mt-1 mb-1">Already have an account? <a href="/login">Login here.</a></p>
+                        <p className="mt-1 mb-1">Already have an account? <Link href="/login">Login here.</Link></p>
                         <p className="mb-0">Forgot username or password?</p>
                     </Card.Body>
                 </Card>

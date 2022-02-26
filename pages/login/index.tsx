@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { Form, Card, Button } from "react-bootstrap";
 import { useEffect, useRef } from 'react';
 import Router from 'next/router';
+import Link from 'next/link';
 import {  auth, loginUser } from '../../firebase/clientApp';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
@@ -47,7 +48,7 @@ export default function Login() {
                         </Form.Group>
                         <Button className="col-12 mt-2" onClick={handleSubmit}>Login</Button>
                     </Form>
-                    <p className="mt-1 mb-1">Don't have an account? <a href="/signup">Sign up here.</a></p>
+                    <p className="mt-1 mb-1">Don&apos;t have an account? <Link href="/signup">Sign up here.</Link></p>
                     <p className="mb-0">Forgot username or password?</p>
                 </Card.Body>
             </Card>
