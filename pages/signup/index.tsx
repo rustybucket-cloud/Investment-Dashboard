@@ -51,7 +51,7 @@ export default function Signup() {
         return (
             <div className="d-flex flex-column justify-content-center align-items-center" style={{minHeight:"100vh"}}>
                 <h1>My Investment Dashboard</h1>
-                <Card className="col-6" style={{maxWidth: "32rem", backgroundColor: "#DAE4EE"}}>
+                <Card className="col-11" style={{maxWidth: "32rem", backgroundColor: "#DAE4EE"}}>
                     <Card.Header className="bg-primary text-white">Sign Up</Card.Header>
                     <Card.Body>
                     {loginError && <Alert>{loginError}</Alert>}
