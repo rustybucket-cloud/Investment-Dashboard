@@ -1,6 +1,6 @@
 import firebase, { initializeApp } from "firebase/app"
 import "firebase/app"
-import "firebase/firestore"
+import { getFirestore, collection, addDoc, enableIndexedDbPersistence } from "firebase/firestore"
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, signOut } from "@firebase/auth";
 
 
@@ -16,6 +16,9 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
+// initalize db
+const db = getFirestore() 
+
 export const auth = getAuth()
 
 export const signUpUser = (email: string, password: string) => createUserWithEmailAndPassword(auth, email, password)
@@ -23,5 +26,9 @@ export const signUpUser = (email: string, password: string) => createUserWithEma
 export const loginUser = (email: string, password: string) => signInWithEmailAndPassword(auth, email, password)
 
 export const logOut = () => signOut(auth)
+
+export const addUserData = (userData: {user: string,fName: string, lName: string, experience: string, savingFor: string[]}) => {
+    return addDoc(collection(db, "users"), userData)    
+}
 
 export default firebase

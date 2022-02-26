@@ -3,20 +3,53 @@ import { Form, Card, Button, Alert } from "react-bootstrap";
 import { useEffect, useRef, useState } from 'react';
 import Router from 'next/router';
 import Link from 'next/link';
-import { auth, signUpUser } from '../../firebase/clientApp';
+import { auth, addUserData, signUpUser } from '../../firebase/clientApp';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import About from '../../components/signup/About';
 import SavingFor from '../../components/signup/SavingFor';
 
+type userData = {fName: string, lName: string, age: string, experience: string, savingFor: string[]}
+
 export default function Signup() {
     const [ loginError, setLoginError ] = useState("")
-    const [ page, setPage ] = useState(2)
+    const [ page, setPage ] = useState(0)
+    const [ userData, setUserData ] = useState<userData>({fName: "", lName: "", age: "", experience: "", savingFor: []})
 
+    useEffect(() => console.log(userData), [userData])
+
+    // refs
     const emailRef = useRef<HTMLInputElement>(null)
     const passwordRef = useRef<HTMLInputElement>(null)
     const confirmPasswordRef = useRef<HTMLInputElement>(null)
 
+    // get auth state
     const [ user, loading, error ] = useAuthState(auth)
+
+    // change user data from about component
+    function aboutData(fName: string, lName: string, age: string, experience: string): void {
+        setUserData(currentUser =>  {
+            return {...currentUser, fName, lName, age, experience}
+        })
+    } 
+
+    // changes data from saving for component
+    function setSavesFor(arr: string[]): void {
+        setUserData(currentUser => {
+            return {...currentUser, savingFor: arr}
+        })
+        submitData()
+    }
+
+    const submitData = () => {
+        try {
+            if (!user || typeof user.email !== "string") return
+            addUserData({...userData, user: user.email})
+        }
+        catch (err) {
+            console.error(err)
+            return
+        }
+    }
 
     // redirect to home page if user is logged in
     useEffect( () => {
@@ -54,7 +87,7 @@ export default function Signup() {
                 <Card className="col-11" style={{maxWidth: "32rem", backgroundColor: "#DAE4EE"}}>
                     <Card.Header className="bg-primary text-white">Sign Up</Card.Header>
                     <Card.Body>
-                    {loginError && <Alert>{loginError}</Alert>}
+                        {loginError && <Alert>{loginError}</Alert>}
                         <Form>
                             <Form.Group controlId="email">
                                 <Form.Label>Email</Form.Label>
@@ -77,7 +110,7 @@ export default function Signup() {
             </div>
         )
     }
-    else if (page === 1) return <About next={nextPage}/>
-    else if (page === 2) return <SavingFor prev={prevPage} next={nextPage}/>
+    else if (page === 1) return <About changeData={aboutData} userData={userData} next={nextPage}/>
+    else if (page === 2) return <SavingFor setSavesFor={setSavesFor} prev={prevPage} next={nextPage}/>
     else return null
 }
