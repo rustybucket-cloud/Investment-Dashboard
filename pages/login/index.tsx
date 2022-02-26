@@ -5,7 +5,7 @@ import Router from 'next/router';
 import {  auth, loginUser } from '../../firebase/clientApp';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-export default function login() {
+export default function Login() {
     const emailRef = useRef<HTMLInputElement>(null)
     const passwordRef = useRef<HTMLInputElement>(null)
 

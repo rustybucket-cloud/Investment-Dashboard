@@ -7,7 +7,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import About from '../../components/signup/About';
 import SavingFor from '../../components/signup/SavingFor';
 
-export default function login() {
+export default function Signup() {
     const [ loginError, setLoginError ] = useState("")
     const [ page, setPage ] = useState(2)
 
