@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.css';
 import { Form, Card, Button } from "react-bootstrap";
 import { useEffect, useRef } from 'react';
 import Router from 'next/router';

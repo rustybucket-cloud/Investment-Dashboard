@@ -1,6 +1,6 @@
 import firebase, { initializeApp } from "firebase/app"
 import "firebase/app"
-import { getFirestore, collection, addDoc, enableIndexedDbPersistence } from "firebase/firestore"
+import { getFirestore, collection, addDoc, getDocs, doc, getDoc, setDoc } from "firebase/firestore"
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, signOut } from "@firebase/auth";
 
 
@@ -28,7 +28,16 @@ export const loginUser = (email: string, password: string) => signInWithEmailAnd
 export const logOut = () => signOut(auth)
 
 export const addUserData = (userData: {user: string,fName: string, lName: string, experience: string, savingFor: string[]}) => {
-    return addDoc(collection(db, "users"), userData)    
+    return setDoc(doc(db, "users", userData.user), userData)    
+}
+
+export const getUserData = async (user: string) => {
+    const docRef = doc(db, "users", user)
+    const docSnap = await getDoc(docRef)
+    if (docSnap.exists()) {
+        return docSnap.data()
+        
+    }
 }
 
 export default firebase

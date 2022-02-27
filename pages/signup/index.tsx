@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.css';
 import { Form, Card, Button, Alert } from "react-bootstrap";
 import { useEffect, useRef, useState } from 'react';
 import Router from 'next/router';
@@ -48,6 +47,9 @@ export default function Signup() {
         catch (err) {
             console.error(err)
             return
+        }
+        finally {
+            Router.push("/")
         }
     }
 

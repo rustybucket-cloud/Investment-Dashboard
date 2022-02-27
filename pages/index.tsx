@@ -1,18 +1,48 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import { useEffect } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import Router from 'next/router'
-import { auth, logOut } from "../firebase/clientApp"
+import { auth, logOut, getUserData } from "../firebase/clientApp"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { Button } from 'react-bootstrap'
+import { DocumentData } from 'firebase/firestore'
+
+type userData = {
+  age: string
+  experience: string
+  fName: string
+  lName: string
+  savingFor: string[]
+  user: string
+}
 
 const Home: NextPage = () => {
   const [user, loading, error] = useAuthState(auth)
+  const [ userData, setUserData ] = useState<DocumentData>()
 
   useEffect(() => {
     user || Router.push("/login")
   })
+
+  const fetchUserData = useCallback(
+    async () => {
+      try {
+        if (!user || typeof user.email !== "string") return
+        const result = await getUserData(user.email)
+        setUserData(result)
+      }
+      catch {
+        return
+      }
+    },
+    [],
+  )
+
+  useEffect(() => {
+    fetchUserData()
+    .catch(err => console.error(err))
+  }, [fetchUserData])
 
   const handleClick = async () => {
     await logOut()
@@ -27,7 +57,7 @@ const Home: NextPage = () => {
       </Head>
 
       <section>
-        <h1>Hello {user && user.email}</h1>
+        <h1>Hello {userData && userData.fName}</h1>
         <Button onClick={handleClick}>Logout</Button>
       </section>
     </div>
