@@ -1,9 +1,9 @@
-.header {
-    box-shadow: 2px 0px 3px rgb(56, 56, 56);
+.wrapper {
+    display: none;
 }
 @media screen and (min-width: 766px)  {
-    .header {
-        width: 10%;
+    .wrapper {
+        width: 10rem;
         height: 100vh;
     }
 }

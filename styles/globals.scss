@@ -6,4 +6,8 @@ $theme-colors: (
     "secondary": "#979797"
 );
 
+body {
+    overflow-x: hidden;
+}
+
 @import "../node_modules/bootstrap/scss/bootstrap.scss"

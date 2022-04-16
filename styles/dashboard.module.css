@@ -1,0 +1,14 @@
+.dashboard {
+    overflow-x: hidden;
+}
+
+.searchResult:hover {
+    background: gray;
+}
+
+@media screen and (min-width: 766px) {
+    .dashboard {
+        margin-left: 10rem;
+        width: calc(100% - 10rem);
+    }
+}

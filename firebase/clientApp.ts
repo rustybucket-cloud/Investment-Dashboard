@@ -36,7 +36,21 @@ export const getUserData = async (user: string) => {
     const docSnap = await getDoc(docRef)
     if (docSnap.exists()) {
         return docSnap.data()
-        
+    }
+}
+
+export const addInvestment = async (user: string | null | undefined, symbol: string, shares: number) => {
+    if (typeof user !== "string") return
+    return setDoc(doc(db, "users", user, "investments", symbol), { shares })
+}
+
+export const getUserInvestments = async (user: string) => {
+    if (!user) return
+    const docRef = doc(db, "users", user, "investments", "stocks")
+    const docSnap = await getDoc(docRef)
+    if (docSnap.exists()) {
+        console.log(docSnap)
+        return docSnap.data()
     }
 }
 
