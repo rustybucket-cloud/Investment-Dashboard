@@ -1,12 +1,12 @@
 import { AddInvestmentFormPresentation } from "./Presentation";
-import { useRef, useState, MouseEvent } from "react"
+import { useRef, useState, MouseEvent, useEffect, ChangeEventHandler } from "react"
 import { addInvestment, auth } from "../../firebase/clientApp"
 import {  useAuthState } from "react-firebase-hooks/auth"
 
 export function AddInvestmentForm({onClick} : { onClick: () => void}) {
     const [error, setError] = useState("")
     const [ suggestions, setSuggestions ] = useState([])
-    const [ stock, setStock ] = useState("")
+    const [ search, setSearch ] = useState("")
 
     const [ user ] = useAuthState(auth)
 
@@ -29,12 +29,24 @@ export function AddInvestmentForm({onClick} : { onClick: () => void}) {
         await addInvestment(user.email, symbol, shares)
     }
 
-    const handleChange = async () => {
-        const search = symbolRef.current?.value
-        const req = await fetch(`/api/investmentsearch/${search}`)
-        const data = await req.json()
-        setSuggestions(data)
+    const setValue = (e : MouseEvent) => {
+        e.preventDefault()
+        const button = e.currentTarget
+        const symbol = button.getAttribute("data-symbol")
+        const name = button.getAttribute("data-name")
+        setSearch(`${name} (${symbol})`)
     }
 
-    return <AddInvestmentFormPresentation onClick={onClick} add={add} onChange={handleChange} error={error} sharesRef={sharesRef} symbolRef={symbolRef} suggestions={suggestions} />
+    useEffect(() => {
+        fetch(`/api/investmentsearch/${search}`)
+            .then(req => req.json())
+            .then(data => setSuggestions(data))
+            .catch(err => console.error(err))
+    }, [search])
+
+    const handleChange = (e : React.ChangeEvent<HTMLInputElement>) => {
+        setSearch(e.currentTarget.value)
+    }
+
+    return <AddInvestmentFormPresentation search={search} onClick={onClick} add={add} onChange={handleChange} error={error} sharesRef={sharesRef} symbolRef={symbolRef} suggestions={suggestions} />
 }

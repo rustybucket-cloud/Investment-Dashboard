@@ -1,3 +1,8 @@
+@use "./abstracts/colors";
+body { 
+    --color-primary: colors.$primary; 
+}
+
 $theme-colors: (
     "primary": #15b0b6,
     "secondary": #979797,
