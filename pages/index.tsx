@@ -23,7 +23,7 @@ type userData = {
 
 const Home: NextPage = () => {
   const [user, loading, error] = useAuthState(auth)
-  const [ stocks, setStocks ] = useState(null)
+  const [ stocks, setStocks ] = useState<string[] | null>(null)
   const [ userData, setUserData ] = useState<DocumentData>()
   const [ isAddInvestmentOpen, setIsAddInvestmentOpen ] = useState(false)
 
@@ -74,7 +74,7 @@ const Home: NextPage = () => {
                   <button onClick={() => setIsAddInvestmentOpen(true)} className="rounded h6 bg-primary text-white btn">ADD INVESTMENT</button>  
               </div>
               <div className="d-flex" style={{overflowX: "auto"}}>
-                { stocks && stocks.map((stock : string, i: number) => <StockCard key={i} name={stock} />) }
+                { stocks && stocks.map((stock : string, i: number) => <StockCard key={i} name={stock} symbol={stock} />) }
               </div>
           </section>
           <section>
