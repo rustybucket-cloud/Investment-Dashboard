@@ -1,13 +1,11 @@
-@import "../node_modules/bootstrap/scss/functions";
-@import "../node_modules/bootstrap/scss/variables";
-
 $theme-colors: (
-    "primary": "#5be46c",
-    "secondary": "#979797"
+    "primary": #15b0b6,
+    "secondary": #979797,
+    "background": #DAE4EE
 );
+
+@import "node_modules/bootstrap/scss/bootstrap";
 
 body {
     overflow-x: hidden;
 }
-
-@import "../node_modules/bootstrap/scss/bootstrap.scss"

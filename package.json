@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "engines": {
-        "node": "14.17.3"
+        "node": "^14.17.3"
     },
     "scripts": {
         "dev": "next dev",
@@ -25,7 +25,8 @@
         "react": "17.0.2",
         "react-bootstrap": "^2.1.2",
         "react-dom": "17.0.2",
-        "react-firebase-hooks": "^5.0.3"
+        "react-firebase-hooks": "^5.0.3",
+        "sass": "^1.50.0"
     },
     "devDependencies": {
         "@types/d3": "^7.1.0",

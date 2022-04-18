@@ -1,0 +1,6 @@
+@use "sass:map";
+
+$font-sizes: ();
+@for $i from 1 through 8 {
+    @debug map.set($font-sizes, #{$i}, (12+$i*2)px)
+}

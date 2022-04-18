@@ -1,0 +1,20 @@
+@use "../abstracts/index" as *;
+@use "sass:map";
+
+.card {
+    width: 100%;
+    max-width: 40rem;
+    background-color: $color-background;
+    margin: auto;
+
+    &__header {
+        color: white;
+        background-color: $color-primary;
+        font-size: map.get($font-sizes, "6");
+    }
+
+    &__btn {
+        background-color: $color-primary;
+        font-size: map.get($font-sizes, "4");
+    }
+}

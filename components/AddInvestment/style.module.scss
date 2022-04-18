@@ -1,0 +1,13 @@
+@use "../../styles/components/card.scss";
+
+.searchResults {
+    position: absolute;
+    padding: 1rem 0;
+    max-height: 15rem;
+    overflow-y: scroll;
+
+    button {
+        padding: .5rem;
+        &:hover { background-color: grey !important; }
+    }
+}

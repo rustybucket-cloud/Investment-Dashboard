@@ -1,10 +1,10 @@
 import { Card, Button } from "react-bootstrap"
 import axios from "axios"
 import { useEffect, useState } from "react"
-
+import { usePrice, TimeSeries } from "../../hooks/usePrice"
 import LineGraph from "./LineGraph"
 
-const data = [
+/* const data = [
     3504.56,
     3389.79,
     3444.24,
@@ -20,16 +20,19 @@ const data = [
     3052.03,
     3075.77,
     3075.77
-]
+] */
 
-export default function StockCard(props: {name: string, symbol: string}) {
+export default function StockCard({name, symbol} : { name: string, symbol: string}) {
+    const [ data, setData ] = useState<{ date: string, price: string}[] | null>(null)
+
+    const { loading, price } = usePrice(name, TimeSeries.Week)
+
     useEffect( () => {
 
     }, [])
 
     return (
-        <Card className="border-0 shadow col-11 col-sm-5 col-xl-3 m-2 p-0" style={{maxWidth: "32rem"}}>
-            <Card.Title className="bg-primary text-white p-1">{props.name}</Card.Title>
+        <Card className="border-0 bg-background shadow col-11 col-sm-5 col-xl-3 m-2 p-0" style={{maxWidth: "32rem"}}>
             <Card.Body className="d-flex flex-column">
                     <select className="col-3">
                         <option>1D</option>
@@ -40,8 +43,10 @@ export default function StockCard(props: {name: string, symbol: string}) {
                         <option>1Y</option>
                         <option>5Y</option> 
                     </select>
-                    <LineGraph data={data} />
+                    { price && <LineGraph data={price} /> }
+                    { !price && <p>Loading...</p>}
             </Card.Body>
+            <Card.Title className="bg-primary text-white m-0 p-1">{name}</Card.Title>
         </Card>
     )
 }
